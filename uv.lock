@@ -196,6 +196,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "mcp" },
     { name = "mcp", extras = ["cli"], specifier = ">=1.12.3" },
     { name = "python-dotenv", specifier = ">=1.1.1" },
 ]
