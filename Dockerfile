@@ -43,4 +43,4 @@ COPY . .
 EXPOSE 8083
 
 # Run the MCP server
-CMD ["uv" "run" "python", "main.py"]
+CMD ["python", "main.py"]
