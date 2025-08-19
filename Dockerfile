@@ -23,7 +23,8 @@ WORKDIR /app
 COPY pyproject.toml uv.lock* ./
 
 # Install dependencies using uv
-RUN uv sync --frozen --no-dev
+RUN uv sync --frozen --no-dev|| true
+RUN pip install python-dotenv mcp
 
 # Copy application code
 COPY . .
