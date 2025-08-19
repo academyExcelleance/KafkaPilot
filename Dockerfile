@@ -40,7 +40,7 @@ COPY . .
 #USER mcpuser
 
 # Expose port (adjust as needed for your MCP server)
-EXPOSE 8000
+EXPOSE 8083
 
 # Run the MCP server
-CMD ["uv", "run", "mcp", "run", "main.py"]
+CMD ["uv" "run" "python", "main.py"]

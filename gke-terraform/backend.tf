@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "mcp-server-terraform-state-bucket"
+    bucket = "kafkapilot-state-bucket"
     prefix = "gke/tf-state"
   }
 }
