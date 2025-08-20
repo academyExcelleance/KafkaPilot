@@ -8,7 +8,7 @@ from mcp.server.fastmcp import FastMCP
 
 
 mcp = FastMCP(
-    name="kafka"
+    name="kafka", host="0.0.0.0", port=8083
 )
 
 
@@ -38,7 +38,8 @@ def main():
     print("  - List Kafka topics (list_kafka_topics)")
     print("  - Describe a Kafka topic (describe_kafka_topic)")
     
-    mcp.run(transport="sse", host="0.0.0.0", port=8083)
+    mcp.run(transport="sse")
+
     
     print("🚀 Server is running and ready to accept requests.")
 
