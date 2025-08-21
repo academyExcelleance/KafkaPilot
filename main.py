@@ -38,7 +38,7 @@ def main():
     print("  - List Kafka topics (list_kafka_topics)")
     print("  - Describe a Kafka topic (describe_kafka_topic)")
     
-    mcp.run(transport="sse")
+    mcp.run(transport="sse", host="0.0.0.0", port=8083)
 
     
     print("🚀 Server is running and ready to accept requests.")
