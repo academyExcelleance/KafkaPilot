@@ -18,7 +18,7 @@ import uvicorn
 from mcp.server.fastmcp import FastMCP
 from mcp.types import TextContent
 
-from confluent_kafka.admin import AdminClient, TopicCollection
+from confluent_kafka.admin import AdminClient
 from confluent_kafka import Consumer, KafkaException
 import uuid
 
