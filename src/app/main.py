@@ -97,36 +97,33 @@ async def describe_kafka_topic(topic_name: str) -> Dict[str, Any]:
          )
 async def read_kafka_topic(topic_name: str, limit: int = 10) -> List[TextContent]:
     """Read messages from a Kafka topic"""
-
-    print("--------------- read_kafka_topic ------------------------")
+    
+   
+    
+    print("---------------read_kafka_topic ------------------------")
 
     consumer_conf = conf.copy()
     consumer_conf.update({
         'group.id': f"mcp-consumer-group-{str(uuid.uuid4())}",
-        'auto.offset.reset': 'earliest',   # start from beginning
-        'enable.auto.commit': False        # don't commit offsets
+        'auto.offset.reset': 'earliest'
     })
-
+    
     consumer = Consumer(consumer_conf)
     consumer.subscribe([topic_name])
-
+    
     messages = []
-
+    
     try:
-        count = 0
-        while count < limit:
-            print(f"--------------- count ------------------------{count}")
-            msg = consumer.poll(timeout=2.0)   # give more time for fetch
+        for _ in range(limit):
+            msg = consumer.poll(timeout=30)
             if msg is None:
-                continue  # wait again
+                break
             if msg.error():
                 raise KafkaException(msg.error())
-
-            messages.append(TextContent(type="text", text=msg.value().decode("utf-8")))
-            count += 1
+            messages.append(TextContent(type="text", text=msg.value().decode('utf-8')))
     finally:
         consumer.close()
-
+    
     return messages
 
 
