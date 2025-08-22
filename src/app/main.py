@@ -19,12 +19,14 @@ from mcp.server.fastmcp import FastMCP
 from mcp.types import TextContent
 
 from confluent_kafka.admin import AdminClient
+from confluent_kafka import Consumer, KafkaException
+import uuid
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-mcp = FastMCP(name="mcp-server-kafka", json_response=False, stateless_http=False) 
+mcp = FastMCP(name="KafkaPilot", json_response=False, stateless_http=False) 
   
 conf = {
     'bootstrap.servers': 'pkc-619z3.us-east1.gcp.confluent.cloud:9092',
@@ -41,7 +43,7 @@ conf = {
 )
 async def list_kafka_topics_tool() -> List[TextContent]:
     """Show a list of Kafka topics"""
-    
+    print("---------------list_kafka_topics_tool ------------------------")
     admin_client = AdminClient(conf)
     cluster_metadata = admin_client.list_topics(timeout=10)
     topic_names = cluster_metadata.topics.keys()
@@ -55,7 +57,7 @@ async def list_kafka_topics_tool() -> List[TextContent]:
 )
 async def describe_kafka_topic(topic_name: str) -> Dict[str, Any]:
     """Describe a Kafka topic with its details"""
-    
+    print("---------------describe_kafka_topic ------------------------")
     admin_client = AdminClient(conf)
     metadata = admin_client.describe_topics([topic_name])
     return metadata
@@ -67,9 +69,10 @@ async def describe_kafka_topic(topic_name: str) -> Dict[str, Any]:
 async def read_kafka_topic(topic_name: str, limit: int = 10) -> List[TextContent]:
     """Read messages from a Kafka topic"""
     
-    from confluent_kafka import Consumer, KafkaException
-    import uuid
+   
     
+    print("---------------read_kafka_topic ------------------------")
+
     consumer_conf = conf.copy()
     consumer_conf.update({
         'group.id': f"mcp-consumer-group-{str(uuid.uuid4())}",
