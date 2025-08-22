@@ -60,13 +60,36 @@ async def describe_kafka_topic(topic_name: str) -> Dict[str, Any]:
     print("---------------describe_kafka_topic ------------------------")
     admin_client = AdminClient(conf)
     
-    # Create TopicCollection object
-    topic_collection = TopicCollection([topic_name])
-    
-    # Use describe_topics with TopicCollection
-    metadata = admin_client.describe_topics(topic_collection)
-    
-    return metadata
+    try:
+        # Get cluster metadata which includes topic information
+        metadata = admin_client.list_topics(topic=topic_name, timeout=10)
+        
+        if topic_name in metadata.topics:
+            topic = metadata.topics[topic_name]
+            
+            # Build detailed response
+            topic_info = {
+                "topic_name": topic_name,
+                "partition_count": len(topic.partitions),
+                "partitions": {}
+            }
+            
+            # Add partition details
+            for partition_id, partition in topic.partitions.items():
+                topic_info["partitions"][partition_id] = {
+                    "partition_id": partition_id,
+                    "leader": partition.leader,
+                    "replicas": list(partition.replicas),
+                    "in_sync_replicas": list(partition.isrs),
+                    "error": partition.error
+                }
+            
+            return topic_info
+        else:
+            return {"error": f"Topic '{topic_name}' not found"}
+            
+    except Exception as e:
+        return {"error": f"Failed to describe topic: {str(e)}"}
     
 @mcp.tool(
        name="read_kafka_topic",
