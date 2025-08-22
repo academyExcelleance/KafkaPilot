@@ -41,7 +41,7 @@ conf = {
     name="list_kafka_topics",
     description="List all Kafka topics availble in the cluster. List controlled by RBAC rules",
 )
-async def list_kafka_topics_tool() -> List[TextContent]:
+async def list_kafka_topics() -> List[TextContent]:
     """Show a list of Kafka topics"""
     print("---------------list_kafka_topics_tool ------------------------")
     admin_client = AdminClient(conf)
