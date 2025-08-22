@@ -1,6 +1,7 @@
 variable "project_id" {
   type        = string
   description = "GCP project id"
+  default = "root-slate-312607"
 }
 
 variable "region" {

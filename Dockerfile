@@ -17,18 +17,16 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
   
 # Create app directory
-WORKDIR /app
+WORKDIR /mcp-server
 
 # Copy dependency files
 COPY pyproject.toml uv.lock* ./
 
 # Install dependencies using uv
-RUN uv sync --frozen --no-dev && rm -rf /tmp/uv-cache || true
-RUN pip install python-dotenv mcp
-
+RUN uv sync --frozen --no-dev
 
 # Copy application code
-COPY . .
+COPY src/app .
 
 
 # Create non-root user for security
@@ -42,7 +40,7 @@ COPY . .
 #USER mcpuser
 
 # Expose port (adjust as needed for your MCP server)
-EXPOSE 8083
+EXPOSE 8080
 
 # Run the MCP server
-CMD ["python", "main.py"]
+CMD ["uv", "run", "main.py", "--name", "mcp-server-kafka", "--log-level", "DEBUG", "--port", "8080", "--host", "0.0.0.0"]
