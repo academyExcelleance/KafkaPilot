@@ -1,0 +1,9 @@
+kafka-python==2.0.2
+prometheus-client==0.17.1
+requests==2.31.0
+pydantic==2.5.0
+pyyaml==6.0.1
+asyncio-mqtt==0.13.0
+mcp-server==1.0.0
+uvicorn==0.24.0
+fastapi==0.104.1

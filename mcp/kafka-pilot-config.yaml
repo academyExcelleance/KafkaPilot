@@ -1,0 +1,53 @@
+# KafkaPilot MCP Server Configuration
+
+kafka:
+  bootstrap_servers: "localhost:9092"
+  security_protocol: "PLAINTEXT"
+  # Uncomment for SASL authentication
+  # sasl_mechanism: "PLAIN"
+  # sasl_username: "your_username"
+  # sasl_password: "your_password"
+  
+  # Uncomment for SSL
+  # ssl_certfile: "/path/to/client.crt"
+  # ssl_keyfile: "/path/to/client.key"
+  # ssl_cafile: "/path/to/ca.crt"
+
+prometheus:
+  url: "http://localhost:9090"
+  timeout: 10
+
+server:
+  name: "kafka-pilot"
+  version: "1.0.0"
+  host: "localhost"
+  port: 8000
+
+security:
+  # Operations that are always allowed
+  allowed_operations:
+    - "list_topics"
+    - "describe_topic"
+    - "list_consumer_groups"
+    - "describe_consumer_group"
+    - "get_consumer_lag"
+    - "get_throughput_metrics"
+    - "list_brokers"
+    - "get_cluster_health"
+    - "check_under_replicated_partitions"
+  
+  # Operations that require special permissions
+  dangerous_operations:
+    - "delete_topic"
+    - "create_topic"
+    - "reset_consumer_offsets"
+    - "alter_topic_config"
+  
+  # Enable audit logging
+  audit_log: true
+  audit_file: "/var/log/kafka-pilot-audit.log"
+
+logging:
+  level: "INFO"
+  file: "/var/log/kafka-pilot.log"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
