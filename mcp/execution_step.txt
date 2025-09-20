@@ -1,0 +1,24 @@
+#install python 3.13
+sudo add-apt-repository ppa:deadsnakes/ppa -y
+sudo apt update
+sudo apt install python3.13 python3.13-venv python3.13-dev -y
+
+#create venv
+python3.13 -m venv .venv
+source .venv/bin/activate
+
+
+# Install mcp server
+pip install -r requirements.txt
+
+#Install Kafka
+wget https://downloads.apache.org/kafka/3.9.0/kafka_2.13-3.9.0.tgz
+tar -xzf kafka_2.13-3.9.0.tgz
+cd kafka_2.13-3.9.0
+
+bin/kafka-storage.sh format --cluster-id "7934785934875" --config config/kraft/server.propertie
+bin/kafka-server-start.sh config/kraft/server.properties
+
+bin/kafka-topics.sh --create --topic test-topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+#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
