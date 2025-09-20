@@ -20,7 +20,8 @@ from typing import Dict, Any, Optional, List
 
 import requests
 import yaml
-from pydantic import BaseSettings, Field
+from pydantic_settings import BaseSettings
+from pydantic import Field
 
 from kafka import KafkaConsumer
 from kafka.admin import KafkaAdminClient
@@ -207,7 +208,7 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     cfg = KafkaPilotConfig()
     tools = build_tools(cfg)
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0, api_key="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")
 
     agent = initialize_agent(
         tools,
@@ -229,3 +230,4 @@ if __name__ == "__main__":
             print("[ANSWER]", result["output"], "\n")
         except KeyboardInterrupt:
             break
+#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
