@@ -1,0 +1,17 @@
+# Core LangChain ecosystem
+langchain>=0.3.0
+langchain-core>=0.3.0
+langchain-openai>=0.2.0
+langserve>=0.3.0
+
+# Kafka client
+confluent-kafka>=2.6.0
+
+# Web server
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+
+# Optional utilities
+pydantic>=2.9.0
+
+sse-starlette>=1.6.5
